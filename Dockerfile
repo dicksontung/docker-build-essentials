@@ -17,9 +17,8 @@ RUN apk add git
 RUN apk add jq
 
 ## Install aws cli
-RUN apk -Uuv add groff less python py-pip python-dev libffi-dev openssl-dev gcc musl-dev
+RUN apk -Uuv add groff less py-pip libffi-dev openssl-dev gcc musl-dev
 RUN pip install awscli
-RUN pip install ansible
 RUN apk --purge -v del py-pip
 RUN rm /var/cache/apk/*
 
@@ -43,10 +42,6 @@ RUN apk add --update ca-certificates \
 ##
 RUN wget https://github.com/dicksontung/yaml-extract/raw/master/yaml-extract -O /usr/local/bin/yaml-extract
 RUN chmod +x /usr/local/bin/yaml-extract
-
-## Install cloudflare-cli
-COPY ./cloudflare-cli.sh /usr/local/bin/cloudflare-cli.sh
-RUN chmod +x /usr/local/bin/cloudflare-cli.sh
 
 COPY --from=sentry-cli /bin/sentry-cli /usr/local/bin/sentry-cli
 RUN chmod +x /usr/local/bin/sentry-cli
